@@ -20,17 +20,14 @@ function addNumberToGame(numberToAdd) {
     return;
   } */
 
-  /* if (state.currentGame < 15) {
-    let paragraph = document.getElementsByTagName("p");
-    paragraph.textContent = `Ainda faltam ${state.currentGame.length - 15}`;
-  }*/
-
   if (isNumberInGame(numberToAdd) === true) {
-    alert("Esse número já está no jogo!");
+    console.log("Esse número já está no jogo!");
+    removeNumberFromGame(numberToAdd);
     console.log(true);
-  } else if (isNumberInGame(numberToAdd) === false) {
+  } else {
     state.currentGame.push(numberToAdd);
     console.log(false);
+    console.log(state.currentGame);
   }
 }
 function isNumberInGame(numberToCheck) {
@@ -40,9 +37,9 @@ function isNumberInGame(numberToCheck) {
     return false;
   }
 }
-
 function removeNumberFromGame(numberToRemove) {
   let newGame = [];
+
   for (let i = 0; i < state.currentGame.length; i++) {
     let currentNumber = state.currentGame[i];
     if (currentGame === numberToRemove) {
@@ -51,8 +48,8 @@ function removeNumberFromGame(numberToRemove) {
     newGame.push(currentNumber);
   }
   state.currentGame = newGame;
+  classList.add("number");
 }
-
 function saveGame() {
   if (state.currentGame.length > 14 && state.currentGame.length < 21) {
     state.savedGames.push(state.newgame);
@@ -61,11 +58,9 @@ function saveGame() {
     return;
   }
 }
-
 function resetGame() {
   state.currentGame = [];
 }
-
 function createBoard() {
   state.board = [];
 
@@ -73,46 +68,44 @@ function createBoard() {
     state.board.push(i);
   }
 }
-
 function newGame() {
   resetGame();
   render();
 }
-
 function render() {
   renderBoard();
   renderButtons();
 }
-
 function renderBoard() {
   let divGame = document.querySelector("#lotofacil-numbers");
 
   divGame.innerHTML = "";
 
   let ulNumbers = document.createElement("ul");
+  ulNumbers.classList.add("numbers");
+
   for (let i = 0; i < state.board.length; i++) {
     let currentNumber = state.board[i];
 
     let liNumber = document.createElement("li");
     liNumber.textContent = currentNumber;
     liNumber.addEventListener("click", handleClickNumber);
+    liNumber.classList.add("number");
 
     ulNumbers.appendChild(liNumber);
   }
 
   divGame.appendChild(ulNumbers);
 }
-
 function handleClickNumber(event) {
   let value = parseInt(event.currentTarget.innerHTML);
-
+  event.currentTarget.classList.add("active");
   if (isNumberInGame(value) === true) {
     removeNumberFromGame(value);
   } else {
     addNumberToGame(value);
   }
 }
-
 function renderButtons() {
   let divButtons = document.querySelector("#lotofacil-buttons");
   divButtons.innerHTML = "";
@@ -122,7 +115,6 @@ function renderButtons() {
   divButtons.appendChild(buttonNewGame);
   divButtons.appendChild(buttonRandomGame);
 }
-
 function createNewGameButton() {
   let button = document.createElement("button");
   button.textContent = "Novo Jogo";
@@ -130,7 +122,6 @@ function createNewGameButton() {
   button.addEventListener("click", newGame);
   return button;
 }
-
 function createRandomGameButton() {
   let button = document.createElement("button");
   button.textContent = "Jogo Aleatório";
@@ -138,7 +129,6 @@ function createRandomGameButton() {
   button.addEventListener("click", randomGame);
   return button;
 }
-
 function randomGame() {
   resetGame();
 
@@ -147,6 +137,5 @@ function randomGame() {
     addNumberToGame(randomNumber);
   }
 }
-
 function renderSavedGames() {}
 start();

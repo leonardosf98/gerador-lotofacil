@@ -1,0 +1,31 @@
+button {
+    cursor: pointer;
+}
+
+.numbers {
+    padding: 10px;
+    border: 1px solid #000000;
+    list-style-type: none;
+    font-size: 20px;
+    display: flex;
+    flex-direction: row;
+    gap: 10%;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-right: 0;
+}
+
+.number {
+    display: inline-block;
+    border: 1px solid rgb(143, 33, 190);
+    margin: 10px;
+    width: 25px;
+    text-align: center;
+    border-radius: 100%;
+    padding: 10px;
+    background-color: rgb(143, 33, 190);
+}
+
+.active {
+    background-color: rgb(93, 15, 126);
+}
