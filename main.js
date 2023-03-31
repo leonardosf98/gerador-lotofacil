@@ -6,32 +6,26 @@ const state = {
   board: [],
   currentGame: [],
   savedGames: [],
-};
-
+}
 function start() {
   createBoard();
   newGame();
   render();
 }
-
 function addNumberToGame(numberToAdd) {
-  /* if (state.currentGame.length > 20) {
+  if (state.currentGame.length > 20) {
     alert("Esse é o máximo de números que você pode adicionar!");
-    return;
-  } */
+  }
 
   if (isNumberInGame(numberToAdd) === true) {
-    console.log("Esse número já está no jogo!");
+    alert.log("Esse número já está no jogo!");
     removeNumberFromGame(numberToAdd);
-    console.log(true);
   } else {
     state.currentGame.push(numberToAdd);
-    console.log(false);
-    console.log(state.currentGame);
   }
 }
 function isNumberInGame(numberToCheck) {
-  if (state.currentGame.includes(numberToCheck) == true) {
+  if (state.currentGame.includes(numberToCheck) === true) {
     return true;
   } else {
     return false;
@@ -43,12 +37,10 @@ function removeNumberFromGame(numberToRemove) {
   for (let i = 0; i < state.currentGame.length; i++) {
     let currentNumber = state.currentGame[i];
     if (currentGame === numberToRemove) {
-      continue;
+      newGame.push(currentNumber);
     }
-    newGame.push(currentNumber);
+    state.currentGame = newGame;
   }
-  state.currentGame = newGame;
-  classList.add("number");
 }
 function saveGame() {
   if (state.currentGame.length > 14 && state.currentGame.length < 21) {
@@ -99,11 +91,13 @@ function renderBoard() {
 }
 function handleClickNumber(event) {
   let value = parseInt(event.currentTarget.innerHTML);
-  event.currentTarget.classList.add("active");
+
   if (isNumberInGame(value) === true) {
     removeNumberFromGame(value);
+    event.currentTarget.classList.remove("active");
   } else {
     addNumberToGame(value);
+    event.currentTarget.classList.add("active");
   }
 }
 function renderButtons() {
